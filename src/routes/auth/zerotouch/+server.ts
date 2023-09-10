@@ -18,13 +18,23 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
 		throw error(403, 'Invalid token');
 	}
 
-	console.log(data);
 
 	//create a session
 	let session = crypto.randomBytes(32).toString('hex');
 
 	let expires = Date.now() + 1000 * 60 * 60 * 24 * 30;
 	let date = new Date(expires);
+
+	//check if a user already exists
+	let [user] = await db.query('SELECT * FROM users WHERE id = ?', [data.user]);
+	if (!user) {
+		//create a user
+		await db.query('INSERT INTO users (id, username) VALUES (?, ?)', [
+			data.user,
+			data.username,
+		]);
+	}
+
 
 	await db.query('INSERT INTO sessions (session, userid, expires) VALUES (?, ?, ?)', [
 		session,
@@ -41,5 +51,5 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
 		secure: secureCookies.toLowerCase() === 'true'
 	});
 
-	throw redirect(303, '/app');
+	throw redirect(303, `/app/${data.username}`);
 };
