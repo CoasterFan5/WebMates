@@ -2,6 +2,7 @@
 	import Monaco from '$lib/components/Monaco.svelte';
 	let editorContent = "console.log('Hello world!')";
 	let language = 'html'
+	let file = 'index.html'
 
 	$: console.log(editorContent)
 </script>
