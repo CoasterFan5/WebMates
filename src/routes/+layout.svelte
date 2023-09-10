@@ -5,5 +5,6 @@
 
 	:global(body) {
 		font-family: Gantari;
+		margin: 0px;
 	}
 </style>
