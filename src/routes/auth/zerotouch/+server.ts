@@ -26,8 +26,8 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
 	let date = new Date(expires);
 
 	//check if a user already exists
-	let [user] = await db.query('SELECT * FROM users WHERE id = ?', [data.user]);
-	if (!user) {
+	let [user] = await db.query('SELECT * FROM users WHERE id = ?', [data.user]) as Array<any>;
+	if (user.length === 0) {
 		//create a user
 		await db.query('INSERT INTO users (id, username) VALUES (?, ?)', [
 			data.user,

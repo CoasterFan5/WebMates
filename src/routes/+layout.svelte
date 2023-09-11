@@ -6,5 +6,15 @@
 	:global(body) {
 		font-family: Gantari;
 		margin: 0px;
+		--color-light: #3B4956;
+		--color-text: #f1f1f1;
+		--color-dark: #14181D;
+		--color-darkish: #1A2026;
+		--color-bg: #212930;
 	}
+
 </style>
+
+
+
+
