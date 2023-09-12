@@ -1640,10 +1640,10 @@ svelte-hmr@^0.15.3:
   resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.15.3.tgz#df54ccde9be3f091bf5f18fc4ef7b8eb6405fbe6"
   integrity sha512-41snaPswvSf8TJUhlkoJBekRrABDXDMdpNpT2tfHIv4JuhgvHqLMhEPGtaQn0BmbNSTkuz2Ed20DF2eHw0SmBQ==
 
-svelte-monaco@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/svelte-monaco/-/svelte-monaco-0.2.0.tgz#0e84c8541660533937bac3389094c38b82a2591f"
-  integrity sha512-nuZQNq+maeNEV9fkkRa21YtkvQmg8+Mj1kgayoSXYeogAM6aOXbhTMG7wiSI+uhYMCed4mZG//fYv8LXsqTBuw==
+svelte-monaco@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/svelte-monaco/-/svelte-monaco-0.3.0.tgz#9fdb28a4f4d2c04cbff5658968d03e54d06bab22"
+  integrity sha512-dieO+8H/liPiewmMH02KFlt+7XOjLB5AFyCtmVwPMT9Tm6c92gC2Mxqc1ggHgf2VNxvxcVdKW/OFzk38jOxYMw==
   dependencies:
     "@monaco-editor/loader" "^1.3.3"
     monaco-themes "^0.4.4"

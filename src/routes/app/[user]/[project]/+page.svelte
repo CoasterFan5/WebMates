@@ -1,5 +1,5 @@
 <script>
-	import Monaco from '$lib/components/Monaco.svelte';
+	import Monaco from 'svelte-monaco';
 	let editorContent = "console.log('Hello world!')";
 	let language = 'html'
 	let file = 'index.html'
@@ -9,8 +9,11 @@
 
 <div class="editor">
 	<Monaco
+		options={{
+			language: language,
+			theme: "vs-dark"
+		}}
 		bind:value={editorContent}
-		language={language}
 	/>
 </div>
 

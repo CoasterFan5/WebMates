@@ -36,6 +36,6 @@
 		"monaco-editor": "^0.41.0",
 		"monaco-themes": "^0.4.4",
 		"mysql2": "^3.6.1",
-		"svelte-monaco": "^0.2.0"
+		"svelte-monaco": "^0.3.0"
 	}
 }
