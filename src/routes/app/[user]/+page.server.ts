@@ -2,10 +2,13 @@ import type { PageServerLoad } from "./$types";
 import { db } from "$lib/resources/db";
 import type { RowDataPacket } from "mysql2";
 import { redirect } from "@sveltejs/kit";
-
+import { r2url } from "$env/static/private";
+import { r2token } from "$env/static/private";
+import crypto from "crypto";
 
 export let load: PageServerLoad = async ({params, cookies}) => {
 	let username = params.user;
+	let userid = '';
 	let owner = false;
 
 	//check if the user is logged in
@@ -18,7 +21,30 @@ export let load: PageServerLoad = async ({params, cookies}) => {
 		if(dbdata1[0].username === params.user) {
 			owner = true;
 		}
+		userid = dbdata1[0].id;
 	}
+
+	let dbdata;
+
+		//get all the projects
+	dbdata = await db.query(`SELECT * FROM projects WHERE owner = ${db.escape(userid)}`) as Array<RowDataPacket>;
+	let realDbData = dbdata[0] as Array<any>;
+	console.log(realDbData)
+
+	type project = {
+		name: string,
+		id: string
+	}
+
+	let projectArray: Array<project> = [];
+	realDbData.forEach((project) => {
+		if(project.public || owner) {
+			projectArray.push({
+				name: project.name,
+				id: project.id
+			})
+		}
+	})
 	
 	
 
@@ -34,7 +60,7 @@ export let load: PageServerLoad = async ({params, cookies}) => {
 	return {
 		username: params.user,
 		owner: owner,
-		projects: [],
+		projects: projectArray,
 	}
 };
 
@@ -48,6 +74,50 @@ export const actions = {
 		}
 
 		let userid = dbdata1[0].id;
-		console.log(userid);
+		let userName = dbdata1[0].username;
+
+		let projectName = `${userName}-${crypto.randomBytes(8).toString('hex')}`
+		
+		let indexFile = crypto.randomBytes(32).toString('hex');
+		console.log(indexFile);
+		let jsFile = crypto.randomBytes(32).toString('hex');
+		console.log(jsFile);
+		let cssFile = crypto.randomBytes(32).toString('hex');
+		console.log(cssFile);
+
+		let fileStructure = [
+			{
+				name: "index.html",
+				type: "file",
+				path: ""
+			},
+			{
+				name: "index.js",
+				type: "file",
+				path: ""
+			},
+			{
+				name: "index.css",
+				type: "file",
+				path: ""
+			}
+		]
+
+		//create 3 files in r2 
+		await fetch(r2url + "/" + indexFile, {
+			method: 'POST',
+			headers: {
+				'Authorization': r2token,
+			},
+			body: JSON.stringify({
+				data: "<h1>Hello World</h1>"
+			})
+		})
+
+
+		//create a project in the database
+		await db.query(`INSERT INTO projects (id, name, owner, public, structure) VALUES (${db.escape(crypto.randomBytes(32).toString('hex'))}, ${db.escape(projectName)}, ${db.escape(userid)}, true, '${JSON.stringify(fileStructure)}')`);
+
+
 	}
 }

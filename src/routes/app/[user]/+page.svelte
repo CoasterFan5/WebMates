@@ -11,7 +11,7 @@
 			<div class="panel">
 				<h2>Projects</h2>
 				{#each data.projects as project}
-					<Project project={project} />
+					<Project project={project} username={data.username}/>
 				{:else}
 					<p>No projects found</p>
 				{/each}
